@@ -3,6 +3,9 @@ const path = './db.json';
 
 const db = {
     connect: function () {
+        if(fs.existsSync('./.gitignore')) {
+            fs.writeFileSync('./.gitignore', 'db.json', 'utf8');
+        }
         if (fs.existsSync(path)) {
             console.log('Connected to database');
         } else {
