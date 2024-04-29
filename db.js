@@ -6,7 +6,8 @@ const db = {
         if (fs.existsSync(path)) {
             console.log('Connected to database');
         } else {
-            console.log('File does not exist, creating and writing data...');
+            console.log('Initiallized database connection');
+            fs.writeFileSync(path, '[ {} ]', 'utf8');
         }
     },
 
@@ -47,6 +48,20 @@ const db = {
         return result;
     },
 
+    findAll: function(variable, value) {
+        let existingData = [];
+            if(fs.existsSync(path)) {
+            let fileData = JSON.parse(fs.readFileSync(path));
+            if (Array.isArray(fileData)) {
+                existingData = fileData;
+            } else {
+                existingData = [fileData];
+            }
+        }
+        const results = existingData.filter(item => item[variable] === value);
+        return results;
+    },
+
     edit: function(variable, oldValue, newValue) {
         let existingData = [];
             if(fs.existsSync(path)) {
@@ -67,6 +82,7 @@ const db = {
             console.log(`Error: Item with ${variable} "${oldValue}" not found.`);
         }
     }
+
 };
 
 module.exports = db;
