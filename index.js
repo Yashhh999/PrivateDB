@@ -84,6 +84,7 @@ const db = {
         } else {
             console.log(`Error: Item with ${variable} "${oldValue}" not found.`);
         }
+        return item;
     }
 
 };
